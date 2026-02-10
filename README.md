@@ -2,7 +2,7 @@
 
 ![Sign Language Demo](signlanguage.gif)
 
-Bu uygulama, MediaPipe Hands ve Derin Öğrenme (Deep Learning) modelini birleştirerek el işaretlerini (A-Z, J hariç 25 harf) gerçek zamanlı olarak yüksek doğrulukla tanıyan bir teknoloji çözümüdür. Görüntü işleme tekniklerini kullanarak kamera üzerinden gelen el hareketlerini anlık olarak harflere dönüştürür ve kullanıcıya interaktif bir deneyim sunar.
+This application is an advanced technological solution that integrates MediaPipe Hands and Deep Learning to recognize hand gestures (25 letters from A-Z, excluding J) in real-time with high accuracy. By leveraging sophisticated computer vision techniques and camera-based motion tracking, it translates hand movements into letters, providing a seamless and interactive user experience.
 
 ---
 
