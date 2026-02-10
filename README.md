@@ -1,4 +1,4 @@
-# 🖐️ Sign Language Recognition System
+# Sign Language Recognition System
 
 ![Sign Language Demo](signlanguage.gif)
 
@@ -6,7 +6,7 @@ This application is an advanced technological solution that integrates MediaPipe
 
 ---
 
-## 🛠️ Technology Stack & Libraries
+## Technology Stack & Libraries
 
 - **Core Logic:** Python 3.11
 - **Computer Vision:** [MediaPipe](https://mediapipe.dev/) (Hand Landmark Detection)
@@ -15,7 +15,7 @@ This application is an advanced technological solution that integrates MediaPipe
 - **GUI:** Tkinter & PIL (Pillow)
 - **Data Analysis:** NumPy, Matplotlib, Scikit-learn
 
-## 📐 System Architecture
+## System Architecture
 
 The project follows a modular pipeline from data acquisition to real-time inference:
 
@@ -38,7 +38,7 @@ Detailed performance metrics including a **Classification Report** and **Confusi
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Prerequisites
 Ensure you have Python 3.11 installed.
@@ -56,7 +56,7 @@ The easiest way is to use the provided command file:
 
 ---
 
-## 🎯 Fine-Tuning & Customization
+## Fine-Tuning & Customization
 To teach the system new signs:
 1. Run `data_collector.py` to record at least 500 samples per sign.
 2. Run `prepare_dataset.py` to rebuild the matrix.
