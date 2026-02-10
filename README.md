@@ -1,5 +1,8 @@
-<<<<<<< HEAD
 # 🖐️ Sign Language Recognition System
+
+Bu proje, MediaPipe Hands ve Derin Öğrenme (Deep Learning) tekniklerini kullanarak işaret dili harflerini gerçek zamanlı olarak tanıyan gelişmiş bir sistemdir. Görüntü işleme ve yapay zeka entegrasyonu ile yüksek doğrulukta tahminler sunar.
+
+---
 
 A high-performance sign language recognition system powered by **MediaPipe Hands** and **Deep Learning**. This project detects 25 letters of the alphabet (excluding J) in real-time using hand landmarks.
 
@@ -76,35 +79,3 @@ To teach the system new signs:
 1. Run `data_collector.py` to record at least 500 samples per sign.
 2. Run `prepare_dataset.py` to rebuild the matrix.
 3. Run `train_model.py` to update the `.keras` model file.
-
----
-
-## 🇹🇷 Türkçe Özet
-Bu proje, MediaPipe ve TensorFlow kullanarak 25 harfi tanıyan bir işaret dili tanıma sistemidir. Görüntü yerine 21 eklem noktasının koordinatlarını kullandığı için çok hızlı çalışır. **`start_app.cmd`** dosyasına tıklayarak başlatabilir, "Switch Camera" butonu ile IVCam veya dahili kamera arasında geçiş yapabilirsiniz.
-
----
-*Developed by Antigravity AI*
-=======
-# Sign Language Mediapipe
-
-## Proje Hakkında
-Bu proje, **Mediapipe ve yapay zeka** kullanarak **işaret dili tanıma** uygulaması geliştirmeyi amaçlamaktadır.  
-Gerçek zamanlı el hareketlerini algılar ve işaret edilen harfleri tahmin eder.
-
----
-
-## Kullanılan Teknolojiler
-- Python  
-- Mediapipe  
-- TensorFlow / Keras  
-- OpenCV  
-- NumPy  
-
----
-
-## Kurulum ve Kullanım
-1. Depoyu klonlayın:
-```bash
-git clone https://github.com/kudretorucciftci/sign_language_mediapipe.git
-
->>>>>>> df429e16b6e3287b1af5a4c41112f66d5967a35c
