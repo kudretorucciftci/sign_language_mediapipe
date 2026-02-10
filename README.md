@@ -1,10 +1,8 @@
 # 🖐️ Sign Language Recognition System
 
-Bu proje, MediaPipe Hands ve Derin Öğrenme (Deep Learning) tekniklerini kullanarak işaret dili harflerini gerçek zamanlı olarak tanıyan gelişmiş bir sistemdir. Görüntü işleme ve yapay zeka entegrasyonu ile yüksek doğrulukta tahminler sunar.
+![Sign Language Demo](signlanguage.gif)
 
----
-
-A high-performance sign language recognition system powered by **MediaPipe Hands** and **Deep Learning**. This project detects 25 letters of the alphabet (excluding J) in real-time using hand landmarks.
+Bu uygulama, MediaPipe Hands ve Derin Öğrenme (Deep Learning) modelini birleştirerek el işaretlerini (A-Z, J hariç 25 harf) gerçek zamanlı olarak yüksek doğrulukla tanıyan bir teknoloji çözümüdür. Görüntü işleme tekniklerini kullanarak kamera üzerinden gelen el hareketlerini anlık olarak harflere dönüştürür ve kullanıcıya interaktif bir deneyim sunar.
 
 ---
 
@@ -17,19 +15,17 @@ A high-performance sign language recognition system powered by **MediaPipe Hands
 - **GUI:** Tkinter & PIL (Pillow)
 - **Data Analysis:** NumPy, Matplotlib, Scikit-learn
 
----
-
 ## 📐 System Architecture
 
 The project follows a modular pipeline from data acquisition to real-time inference:
 
-### 1. Data Collection (`data_collector.py`)
+### 1. Data Collection
 Instead of raw images, the system captures **63 physical coordinates** (21 points × X, Y, Z) of the hand. This makes the model extremely lightweight (~700KB) and robust against lighting/background changes.
 
-### 2. Dataset Preparation (`prepare_dataset.py`)
+### 2. Dataset Preparation
 Accumulated `.npy` files are aggregated into a single vectorized dataset (`X_dataset.npy` and `y_labels.npy`).
 
-### 3. Model Training (`train_model.py`)
+### 3. Model Training
 A Deep Neural Network (DNN) with the following architecture:
 - **Input Layer:** 63 features
 - **Hidden Layers:** 256 -> 128 -> 64 with **Dropout** (0.4, 0.3, 0.2) to prevent overfitting.
@@ -37,7 +33,7 @@ A Deep Neural Network (DNN) with the following architecture:
 - **Optimizer:** Adam
 - **Loss Function:** Sparse Categorical Crossentropy
 
-### 4. Evaluation (`model_evaluation.py`)
+### 4. Evaluation
 Detailed performance metrics including a **Classification Report** and **Confusion Matrix** to identify specifically which letters are being confused.
 
 ---
@@ -57,20 +53,6 @@ py -3.11 -m pip install -r requirements.txt
 The easiest way is to use the provided command file:
 - Simply double-click **`start_app.cmd`**
 - Or run in terminal: `py -3.11 gui_inference.py`
-
----
-
-## 📂 File Structure (English Renamed)
-
-- `data_collector.py`: Collect hand landmark data for new letters.
-- `prepare_dataset.py`: Process raw coordinates into training data.
-- `train_model.py`: Train the Deep Learning model.
-- `gui_inference.py`: Main GUI application for real-time detection (Inference).
-- `inference_script.py`: Console-based detection script.
-- `model_evaluation.py`: Analyze model accuracy and confusion matrix.
-- `camera_test.py`: Utility to detect available camera indices (iVCam/Built-in).
-- `sign_lang_model.keras`: The pre-trained production model.
-- `hand_coordinate_data/`: Directory containing raw `.npy` data.
 
 ---
 
