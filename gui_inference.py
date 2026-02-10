@@ -4,30 +4,30 @@ import numpy as np
 import os
 import sys
 
-# TensorFlow logları kapat (Sadece hatalar)
+# Suppress TensorFlow logs (Errors only)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-print("LOG: Kutuphaneler yukleniyor (Keras 3 & MediaPipe)...")
+print("LOG: Loading Libraries (Keras 3 & MediaPipe)...")
 
 try:
     from tensorflow.keras.models import load_model
     import tkinter as tk
     from PIL import Image, ImageTk
     
-    # MediaPipe Import Onarımı
+    # MediaPipe Import Fix
     try:
         import mediapipe as mp
         if not hasattr(mp, 'solutions'):
             from mediapipe.python import solutions as mp_solutions
             mp.solutions = mp_solutions
-        print("✅ LOG: MediaPipe basariyla baglandi.")
+        print("✅ LOG: MediaPipe connected successfully.")
     except Exception as e:
-        print(f"❌ LOG: MediaPipe baglantı sorunu: {e}")
+        print(f"❌ LOG: MediaPipe connection issue: {e}")
         import mediapipe as mp 
     
-    print("✅ LOG: Tum temel kutuphaneler hazir.")
+    print("✅ LOG: All core libraries are ready.")
 except Exception as e:
-    print(f"❌ HATA: Kutuphane yukleme hatasi: {e}")
+    print(f"❌ ERROR: Library loading error: {e}")
     sys.exit(1)
 
 # Letter labels (A-Z, skipping J)

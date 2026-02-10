@@ -1,6 +1,5 @@
 ﻿import os
 import numpy as np
-from tensorflow.keras.utils import to_categorical
 
 data_path = "hand_coordinate_data"
 X = []
