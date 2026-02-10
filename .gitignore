@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# IDEs
+.vs/
+.vscode/
+
+# Project Specific
+X_dataset.npy
+y_labels.npy
+*.npy
+# Unnamed datasets or temporary npy files
+hand_coordinate_data/
+# Usually we don't push the actual dataset if it's large, but here I'll keep it simple.
+# If hand_coordinate_data is very large, consider ignoring it.
+# For now, let's just ignore the obvious stuff.
