@@ -1,20 +1,16 @@
-# Python
+# Python stuff
 __pycache__/
 *.py[cod]
 *$py.class
 venv/
 .env
 
-# IDEs
+# IDE stuff
 .vs/
 .vscode/
+*.swp
+*.swo
 
-# Project Specific
-X_dataset.npy
-y_labels.npy
-*.npy
-# Unnamed datasets or temporary npy files
-hand_coordinate_data/
-# Usually we don't push the actual dataset if it's large, but here I'll keep it simple.
-# If hand_coordinate_data is very large, consider ignoring it.
-# For now, let's just ignore the obvious stuff.
+# Project specific
+# We are NOT ignoring npy files anymore because user wants them in git
+# hand_coordinate_data/ is NOT ignored anymore
