@@ -2,20 +2,20 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
 import cv2
 import numpy as np
-import mediapipe as mp
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 import av
 import threading
+import os
 
-# MediaPipe bileşenlerini standart yolla al
+# MediaPipe kararlılık ayarları
 try:
+    from mediapipe.solutions import hands as mp_hands
+    from mediapipe.solutions import drawing_utils as mp_draw
+except ImportError:
+    import mediapipe as mp
     mp_hands = mp.solutions.hands
     mp_draw = mp.solutions.drawing_utils
-except (AttributeError, ImportError):
-    # Eğer üstteki başarısız olursa, manuel olarak solutions'a erişmeyi dene
-    import mediapipe.python.solutions.hands as mp_hands
-    import mediapipe.python.solutions.drawing_utils as mp_draw
 
 # Sayfa Ayarları
 st.set_page_config(page_title="AI Sign Language Translator", layout="wide", page_icon="🤟")

@@ -1,10 +1,10 @@
-mediapipe
-tensorflow-cpu
+mediapipe==0.10.9
+tensorflow-cpu==2.15.0
 opencv-python-headless
 scikit-learn
 matplotlib
 pillow
-numpy
+numpy<2.0.0
 streamlit
 streamlit-webrtc
 av
