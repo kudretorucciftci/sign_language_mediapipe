@@ -7,4 +7,5 @@ pillow
 numpy<2.0.0
 streamlit
 streamlit-webrtc
+aiortc==1.3.2
 av

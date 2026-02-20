@@ -166,7 +166,13 @@ with col1:
         key="sign-language",
         video_processor_factory=VideoProcessor,
         rtc_configuration=RTCConfiguration(
-            {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+            {"iceServers": [
+                {"urls": ["stun:stun.l.google.com:19302"]},
+                {"urls": ["stun:stun1.l.google.com:19302"]},
+                {"urls": ["stun:stun2.l.google.com:19302"]},
+                {"urls": ["stun:stun3.l.google.com:19302"]},
+                {"urls": ["stun:stun4.l.google.com:19302"]},
+            ]}
         ),
         media_stream_constraints={"video": True, "audio": False},
         async_processing=True,
@@ -176,18 +182,22 @@ with col2:
     st.markdown('<div class="prediction-container">', unsafe_allow_html=True)
     st.markdown('<p class="prediction-label">Tahmin Edilen Harf</p>', unsafe_allow_html=True)
     
-    # Placeholder for dynamic update
+    # Placeholderlar
     prediction_placeholder = st.empty()
+    status_placeholder = st.empty()
     
-    # Prediction loop if stream is running
+    # Canlı Güncelleme Döngüsü
+    import time
     if webrtc_ctx.state.playing:
-        with lock:
-            char = prediction_state["char"]
-        prediction_placeholder.markdown(f'<p class="prediction-value">{char}</p>', unsafe_allow_html=True)
-        st.markdown('<div class="status-badge">Sistem Aktif - Tarama Yapılıyor</div>', unsafe_allow_html=True)
+        status_placeholder.markdown('<div class="status-badge">Sistem Aktif - Tarama Yapılıyor</div>', unsafe_allow_html=True)
+        while webrtc_ctx.state.playing:
+            with lock:
+                char = prediction_state["char"]
+            prediction_placeholder.markdown(f'<p class="prediction-value">{char}</p>', unsafe_allow_html=True)
+            time.sleep(0.1)
     else:
         prediction_placeholder.markdown('<p class="prediction-value">-</p>', unsafe_allow_html=True)
-        st.markdown('<div class="status-badge" style="color: #ff4b2b; background: rgba(255, 75, 43, 0.1);">Kamera Kapalı</div>', unsafe_allow_html=True)
+        status_placeholder.markdown('<div class="status-badge" style="color: #ff4b2b; background: rgba(255, 75, 43, 0.1);">Kamera Kapalı</div>', unsafe_allow_html=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
 
