@@ -1,7 +1,7 @@
-mediapipe
-tensorflow-cpu>=2.16.1
+mediapipe==0.10.11
+tensorflow-cpu==2.16.1
 opencv-python-headless
-numpy<2.0.0
+numpy==1.26.4
 streamlit
 streamlit-webrtc
 av
