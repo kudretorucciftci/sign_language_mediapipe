@@ -8,6 +8,14 @@ from tensorflow.keras.models import load_model
 import av
 import threading
 
+# MediaPipe Import Fix for some environments
+if not hasattr(mp, 'solutions'):
+    try:
+        from mediapipe.python import solutions as mp_solutions
+        mp.solutions = mp_solutions
+    except Exception:
+        pass
+
 # Sayfa Ayarları
 st.set_page_config(page_title="AI Sign Language Translator", layout="wide", page_icon="🤟")
 
