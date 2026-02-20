@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
 import cv2
@@ -6,16 +7,20 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 import av
 import threading
-import os
+import mediapipe as mp
 
-# MediaPipe kararlılık ayarları
+# MediaPipe 'solutions' hatası için kesin çözüm
 try:
-    from mediapipe.solutions import hands as mp_hands
-    from mediapipe.solutions import drawing_utils as mp_draw
+    from mediapipe.python.solutions import hands as mp_hands
+    from mediapipe.python.solutions import drawing_utils as mp_draw
 except ImportError:
-    import mediapipe as mp
-    mp_hands = mp.solutions.hands
-    mp_draw = mp.solutions.drawing_utils
+    try:
+        from mediapipe.solutions import hands as mp_hands
+        from mediapipe.solutions import drawing_utils as mp_draw
+    except ImportError:
+        import mediapipe as mp
+        mp_hands = mp.solutions.hands
+        mp_draw = mp.solutions.drawing_utils
 
 # Sayfa Ayarları
 st.set_page_config(page_title="AI Sign Language Translator", layout="wide", page_icon="🤟")
