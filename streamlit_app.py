@@ -8,13 +8,19 @@ from tensorflow.keras.models import load_model
 import av
 import threading
 
-# MediaPipe Import Fix for some environments
-if not hasattr(mp, 'solutions'):
+# MediaPipe bileşenlerini güvenli bir şekilde içe aktar
+try:
+    import mediapipe.python.solutions.hands as mp_hands
+    import mediapipe.python.solutions.drawing_utils as mp_draw
+except ImportError:
     try:
+        mp_hands = mp.solutions.hands
+        mp_draw = mp.solutions.drawing_utils
+    except AttributeError:
+        # Son çare: solutions üzerinden manuel deneme
         from mediapipe.python import solutions as mp_solutions
-        mp.solutions = mp_solutions
-    except Exception:
-        pass
+        mp_hands = mp_solutions.hands
+        mp_draw = mp_solutions.drawing_utils
 
 # Sayfa Ayarları
 st.set_page_config(page_title="AI Sign Language Translator", layout="wide", page_icon="🤟")
@@ -103,18 +109,16 @@ def load_resources():
     model = load_model("sign_lang_model.keras")
     harfler = [chr(i) for i in range(65, 91) if i != 74] # A-Z except J
     
-    # MediaPipe el tespiti
-    mp_hands = mp.solutions.hands
+    # MediaPipe el tespiti (global mp_hands kullanılıyor)
     hands = mp_hands.Hands(
         static_image_mode=False, 
         max_num_hands=1, 
         min_detection_confidence=0.7,
         min_tracking_confidence=0.7
     )
-    mp_draw = mp.solutions.drawing_utils
-    return model, harfler, hands, mp_draw
+    return model, harfler, hands
 
-model, harfler, hands, mp_draw = load_resources()
+model, harfler, hands = load_resources()
 
 # Thread-safe prediction storage
 lock = threading.Lock()
@@ -134,7 +138,7 @@ class VideoProcessor(VideoProcessorBase):
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 # Landmarkları çiz
-                mp_draw.draw_landmarks(img, hand_landmarks, mp.solutions.hands.HAND_CONNECTIONS)
+                mp_draw.draw_landmarks(img, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                 
                 # Koordinatları topla
                 features = []
