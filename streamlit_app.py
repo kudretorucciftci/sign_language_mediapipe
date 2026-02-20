@@ -8,8 +8,7 @@ from tensorflow.keras.models import load_model
 import av
 import threading
 import mediapipe as mp
-
-import mediapipe as mp
+import time
 
 # MediaPipe bileşenlerini al
 try:
@@ -123,41 +122,53 @@ lock = threading.Lock()
 prediction_state = {"char": "-", "confidence": 0.0}
 
 class VideoProcessor(VideoProcessorBase):
+    def __init__(self):
+        self.frame_count = 0
+        self.last_pred = "-"
+
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
+        self.frame_count += 1
         
         # Görüntü işleme
         img = cv2.flip(img, 1)
         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        
+        # MediaPipe işleme (her frame'de yapılabilir, hafiftir)
         results = hands.process(rgb_img)
         
-        current_pred = "-"
+        current_pred = "Taraniyor..."
         
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 # Landmarkları çiz
                 mp_draw.draw_landmarks(img, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                 
-                # Koordinatları topla
-                features = []
-                for lm in hand_landmarks.landmark:
-                    features.extend([lm.x, lm.y, lm.z])
-                
-                if len(features) == 63:
-                    # Model tahmini
-                    input_data = np.array([features])
-                    prediction = model.predict(input_data, verbose=0)
-                    idx = np.argmax(prediction)
-                    conf = np.max(prediction)
+                # Sadece her 5 frame'de bir ağır model tahmini yap
+                if self.frame_count % 5 == 0:
+                    features = []
+                    for lm in hand_landmarks.landmark:
+                        features.extend([lm.x, lm.y, lm.z])
                     
-                    if conf > 0.5:
-                        current_pred = harfler[idx]
-                        with lock:
-                            prediction_state["char"] = current_pred
-                            prediction_state["confidence"] = conf
+                    if len(features) == 63:
+                        input_data = np.array([features])
+                        prediction = model.predict(input_data, verbose=0)
+                        idx = np.argmax(prediction)
+                        conf = np.max(prediction)
+                        
+                        if conf > 0.4: # Teşhis eşiğini biraz düşürdük
+                            self.last_pred = harfler[idx]
+                            with lock:
+                                prediction_state["char"] = self.last_pred
+                                prediction_state["confidence"] = conf
+                
+                # Video üzerine yazdır (Anlık geri bildirim)
+                cv2.putText(img, f"Harf: {self.last_pred}", (10, 50), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 219, 222), 3)
         else:
             with lock:
                 prediction_state["char"] = "El Yok"
+                self.last_pred = "-"
         
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
