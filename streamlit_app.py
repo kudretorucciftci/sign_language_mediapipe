@@ -9,18 +9,16 @@ import av
 import threading
 import mediapipe as mp
 
-# MediaPipe 'solutions' hatası için kesin çözüm
+import mediapipe as mp
+
+# MediaPipe bileşenlerini al
 try:
-    from mediapipe.python.solutions import hands as mp_hands
-    from mediapipe.python.solutions import drawing_utils as mp_draw
-except ImportError:
-    try:
-        from mediapipe.solutions import hands as mp_hands
-        from mediapipe.solutions import drawing_utils as mp_draw
-    except ImportError:
-        import mediapipe as mp
-        mp_hands = mp.solutions.hands
-        mp_draw = mp.solutions.drawing_utils
+    mp_hands = mp.solutions.hands
+    mp_draw = mp.solutions.drawing_utils
+except AttributeError as e:
+    st.error(f"MediaPipe Modül Hatası: {e}")
+    st.info("İpucu: Eğer bu hatayı alıyorsanız, lütfen Streamlit Cloud üzerinde 'Delete App' yapıp 'New App' olarak sıfırdan kurun. Kütüphane önbelleği (cache) çakışıyor olabilir.")
+    st.stop()
 
 # Sayfa Ayarları
 st.set_page_config(page_title="AI Sign Language Translator", layout="wide", page_icon="🤟")
