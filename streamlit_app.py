@@ -10,14 +10,23 @@ import threading
 import mediapipe as mp
 import time
 
-# MediaPipe bileşenlerini al
+# MediaPipe bileşenlerini güvenli bir şekilde al
 try:
-    mp_hands = mp.solutions.hands
-    mp_draw = mp.solutions.drawing_utils
-except AttributeError as e:
-    st.error(f"MediaPipe Modül Hatası: {e}")
-    st.info("İpucu: Eğer bu hatayı alıyorsanız, lütfen Streamlit Cloud üzerinde 'Delete App' yapıp 'New App' olarak sıfırdan kurun. Kütüphane önbelleği (cache) çakışıyor olabilir.")
-    st.stop()
+    # En güvenli yol: Doğrudan modül yollarından import
+    from mediapipe.python.solutions import hands as mp_hands
+    from mediapipe.python.solutions import drawing_utils as mp_draw
+    print("LOG: MediaPipe modules loaded via direct python path.")
+except ImportError:
+    try:
+        # Alternatif yol: Standart solutions üzerinden
+        import mediapipe as mp
+        mp_hands = mp.solutions.hands
+        mp_draw = mp.solutions.drawing_utils
+        print("LOG: MediaPipe modules loaded via standard solutions path.")
+    except (AttributeError, ImportError) as e:
+        st.error(f"MediaPipe Modül Hatası: {e}")
+        st.info("Sistem kütüphaneleri hazırlanıyor olabilir, lütfen sayfayı yenileyin veya 'Reboot app' yapın.")
+        st.stop()
 
 # Sayfa Ayarları
 st.set_page_config(page_title="AI Sign Language Translator", layout="wide", page_icon="🤟")
